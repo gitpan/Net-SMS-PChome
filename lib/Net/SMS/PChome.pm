@@ -6,7 +6,7 @@ use WWW::Mechanize;
 use HTML::TagParser;
 use Date::Calc qw(check_date check_time Today_and_Now This_Year);
 
-our $VERSION = '0.1';
+our $VERSION = '0.11';
 our (@ISA) = qw(Exporter);
 our (@EXPORT) = qw(send_sms);
 
@@ -175,7 +175,7 @@ sub smsSend {
    $self->{"_ua"}->field('mobiles', $parms->{recipients});
    $self->{"_ua"}->field('sendType', $parms->{sendType});
    $self->{"_ua"}->field('longCount', scalar(@{$self->{"_recipients"}}));
- 
+
    if($self->smsType eq '2') {
    	$self->{"_ua"}->select('year', ($parms->{year} - This_Year()));
    	$self->{"_ua"}->select('month', $parms->{month});
@@ -292,7 +292,7 @@ Net::SMS::PChome - Send SMS messages via the sms.pchome.com.tw service.
   my $sms = new Net::SMS::PChome;
      $sms->login('username', 'password', 'auth_code');
      $sms->smsRecipient('0912345678');
-     $sms->smsSend("The SMS be send by TWSMS Service!");
+     $sms->smsSend("The SMS be send by PChome SMS Service!");
 
   if($sms->is_success) {
      print "Successfully sent message to ".$sms->successcount." number!\n";
@@ -303,7 +303,7 @@ Net::SMS::PChome - Send SMS messages via the sms.pchome.com.tw service.
 
 or, if you like one liners:
 
-  perl -MNet::SMS::PChome -e 'send_sms("twsms_username", "twsms_password", "auth_code", "recipient", "messages text")'
+  perl -MNet::SMS::PChome -e 'send_sms("pchome_username", "pchome_password", "auth_code", "recipient", "messages text")'
 
 
 =head1 DESCRIPTION
@@ -326,7 +326,7 @@ Defaults to L<http://sms.pchome.com.tw/jsp/smslong.jsp>
 
 =item ua
 
-Configure your own L<WWW::Mechanize> object, or use our default one.
+Configure your own L<WWW::Mechanize> object, or use our default value.
 
 =item username
 
@@ -425,8 +425,7 @@ Returns the result message, as provided by sms.pchome.com.tw, or L<LWP::UserAgen
 
 =head2 EXPORT
 
-None by default.
-
+    send_sms
 
 
 =head1 SEE ALSO
